@@ -29,12 +29,14 @@
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Types of data",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "essentials/pretraining",
+              "essentials/fine-tuning",
+              "essentials/alignment",
+              "essentials/evaluation",
+              "essentials/conversational",
+              "essentials/multimodal"
             ]
           },
           {

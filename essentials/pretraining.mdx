@@ -1,0 +1,152 @@
+---
+title: 'Pre-training Data'
+description: 'Foundation data for establishing fundamental language understanding'
+icon: 'database'
+---
+
+## Foundation: Pre-training Phase
+
+The pre-training stage establishes the model's fundamental language understanding by exposing it to massive volumes of unstructured text. During this phase, models learn linguistic patterns by predicting missing data segments, with parameter adjustments driven by loss functions that quantify prediction accuracy.
+
+<Note>
+Pre-training forms the foundation of language model capabilities, requiring the largest and most diverse datasets in the entire training pipeline.
+</Note>
+
+## Training Corpora
+
+Pre-training datasets typically encompass a broad range of text sources to ensure comprehensive language understanding:
+
+<CardGroup cols={2}>
+<Card title="Web Content" icon="globe">
+  - General web pages and articles
+  - Online resources and documentation
+  - News articles and current events
+</Card>
+
+<Card title="Literary Works" icon="book">
+  - Books and publications
+  - Academic papers and research
+  - Technical documentation
+</Card>
+
+<Card title="Interactive Content" icon="comments">
+  - Discussion forums
+  - Social media dialogues
+  - Community Q&A platforms
+</Card>
+
+<Card title="Code and Documentation" icon="code">
+  - Programming repositories
+  - Technical documentation
+  - Code comments and explanations
+</Card>
+</CardGroup>
+
+## Primary Data Sources
+
+Notable repositories serving as primary data sources include:
+
+<Tabs>
+<Tab title="Common Crawl">
+One of the largest publicly available web crawl datasets, containing petabytes of web page data collected over years. It provides:
+
+- Raw web page content
+- Extracted text data
+- Metadata about crawled pages
+- Multiple language representations
+
+<Info>
+Common Crawl releases new datasets monthly, making it an evolving resource for pre-training data.
+</Info>
+</Tab>
+
+<Tab title="The Pile">
+A curated 825GB dataset specifically designed for language model training, featuring:
+
+- Diverse text sources
+- Quality-filtered content
+- Domain-specific subsets
+- Academic and technical texts
+
+The Pile includes specialized datasets like:
+- ArXiv papers
+- PubMed abstracts
+- Stack Exchange posts
+- GitHub code
+</Tab>
+</Tabs>
+
+## Data Quality Considerations
+
+While expert annotators rarely contribute directly to pre-training data creation, quality control remains crucial:
+
+<Steps>
+<Step title="Dataset Curation">
+Select high-quality sources that represent diverse writing styles, domains, and perspectives.
+</Step>
+
+<Step title="Filtering and Cleaning">
+Remove low-quality content, duplicates, and potentially harmful material through automated and manual processes.
+</Step>
+
+<Step title="Bias Assessment">
+Evaluate datasets for potential biases and ensure balanced representation across different groups and viewpoints.
+</Step>
+
+<Step title="Quality Metrics">
+Apply automated quality metrics to assess text coherence, factual accuracy, and linguistic diversity.
+</Step>
+</Steps>
+
+## Recent Developments
+
+<Tip>
+Recent research has begun exploring human preference integration even at the pre-training stage, potentially improving model alignment from the ground up.
+</Tip>
+
+### Emerging Approaches
+
+1. **Preference-aware pre-training**: Incorporating human feedback signals during initial training
+2. **Curated quality subsets**: Using human-validated high-quality text samples
+3. **Domain-specific pre-training**: Tailoring foundation models for specific industries or use cases
+
+## Scale and Requirements
+
+Pre-training datasets are characterized by their massive scale:
+
+| Dataset Size | Typical Use Case | Training Time |
+|-------------|------------------|---------------|
+| 10-100 GB | Small specialized models | Days |
+| 100 GB - 1 TB | Medium language models | Weeks |
+| 1-10 TB | Large foundation models | Months |
+| 10+ TB | State-of-the-art models | Months to years |
+
+<Warning>
+Pre-training requires significant computational resources. Consider using pre-trained foundation models and focusing on fine-tuning for most applications.
+</Warning>
+
+## Best Practices
+
+<AccordionGroup>
+<Accordion title="Data Diversity">
+Ensure your pre-training corpus includes:
+- Multiple languages (if targeting multilingual capabilities)
+- Various writing styles (formal, informal, technical)
+- Different time periods to capture language evolution
+- Diverse cultural perspectives
+</Accordion>
+
+<Accordion title="Legal and Ethical Considerations">
+- Respect copyright and licensing requirements
+- Remove personally identifiable information (PII)
+- Filter out harmful or biased content
+- Document data sources and processing steps
+</Accordion>
+
+<Accordion title="Technical Implementation">
+- Use distributed processing for large-scale data handling
+- Implement deduplication to avoid overfitting
+- Create validation sets from held-out data
+- Monitor training metrics for anomalies
+</Accordion>
+</AccordionGroup> 

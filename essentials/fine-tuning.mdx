@@ -1,0 +1,269 @@
+---
+title: 'Fine-tuning Data'
+description: 'Supervised fine-tuning, instruction tuning, and parameter-efficient methods'
+icon: 'sliders'
+---
+
+## Enhancing Capabilities Through Supervised Fine-tuning
+
+Supervised Fine-tuning (SFT) refines model performance by training on curated input-output pairs tailored to specific applications. This targeted approach boosts task-specific accuracy, though potentially at the expense of broader generalization abilities.
+
+<Info>
+SFT transforms general-purpose language models into specialized tools optimized for your specific use cases.
+</Info>
+
+## Understanding SFT Data Structure
+
+SFT relies on high-quality prompt-completion pairs that demonstrate desired model behavior:
+
+<CodeGroup>
+```json Mathematical Example
+{
+  "prompt": "What is 2 plus 2?",
+  "completion": "The calculation yields: 4"
+}
+```
+
+```json Creative Writing Example
+{
+  "prompt": "Write a haiku about machine learning",
+  "completion": "Data flows like streams\nPatterns emerge from chaos\nModels learn and grow"
+}
+```
+
+```json API Interaction Example
+{
+  "prompt": "Generate a REST API call to fetch user data",
+  "completion": "GET /api/users/{userId}\nHeaders: { 'Authorization': 'Bearer TOKEN' }"
+}
+```
+</CodeGroup>
+
+## Applications Beyond Objective Tasks
+
+SFT extends to diverse creative and technical applications:
+
+<CardGroup cols={2}>
+<Card title="API Interactions" icon="plug">
+  Teaching models to generate and parse API calls, format responses, and handle errors
+</Card>
+
+<Card title="Strategic Planning" icon="chess">
+  Training on business scenarios, decision trees, and strategic analysis frameworks
+</Card>
+
+<Card title="Creative Content" icon="palette">
+  Crafting engaging narratives, marketing copy, and age-appropriate content
+</Card>
+
+<Card title="Technical Documentation" icon="file-code">
+  Generating clear documentation, code comments, and technical explanations
+</Card>
+</CardGroup>
+
+## Quality Requirements for SFT Datasets
+
+<Steps>
+<Step title="Maintain Exceptional Standards">
+Every example should represent the ideal model output. Poor quality examples will degrade model performance.
+
+<Check>
+Quality over quantity: 1,000 excellent examples outperform 10,000 mediocre ones.
+</Check>
+</Step>
+
+<Step title="Target Capability Boundaries">
+Focus on examples that push the model's capabilities:
+- Complex reasoning tasks
+- Domain-specific expertise
+- Novel problem-solving approaches
+- Out-of-distribution scenarios
+</Step>
+
+<Step title="Ensure Diversity">
+Cover edge cases and variations:
+- Different phrasings of similar requests
+- Various difficulty levels
+- Multiple valid approaches to problems
+</Step>
+</Steps>
+
+<Warning>
+While synthetic data serves many purposes, advancing beyond existing capabilities often demands expert human input to generate novel, out-of-distribution examples.
+</Warning>
+
+## Teaching Models to Follow Instructions
+
+Instruction tuning, a specialized form of SFT, empowers models to interpret and execute specific directives. This approach transformed base models into instruction-following assistants capable of understanding nuanced user requests.
+
+### Instruction Categories
+
+Human annotators typically craft diverse instruction-response pairs spanning multiple categories:
+
+<Tabs>
+<Tab title="Content Generation">
+- Blog posts and articles
+- Creative stories and scripts
+- Technical documentation
+- Marketing copy
+- Social media content
+</Tab>
+
+<Tab title="Question Answering">
+- Factual queries (closed-domain)
+- Open-ended questions
+- Multi-hop reasoning
+- Comparative analysis
+- Hypothetical scenarios
+</Tab>
+
+<Tab title="Text Processing">
+- Summarization
+- Translation
+- Paraphrasing
+- Style transfer
+- Format conversion
+</Tab>
+
+<Tab title="Analysis Tasks">
+- Sentiment analysis
+- Data classification
+- Information extraction
+- Pattern recognition
+- Logical reasoning
+</Tab>
+</Tabs>
+
+### Instruction Format Best Practices
+
+<AccordionGroup>
+<Accordion title="Clear Task Definition">
+```json
+{
+  "instruction": "Summarize the following article in 3 bullet points, focusing on the main findings",
+  "input": "[Article text here]",
+  "output": "• [Key finding 1]\n• [Key finding 2]\n• [Key finding 3]"
+}
+```
+</Accordion>
+
+<Accordion title="Context-Rich Instructions">
+```json
+{
+  "instruction": "You are a financial advisor. Explain the concept of compound interest to a teenager",
+  "output": "Imagine your money is like a snowball rolling down a hill..."
+}
+```
+</Accordion>
+
+<Accordion title="Multi-step Tasks">
+```json
+{
+  "instruction": "1) Identify the main argument\n2) List supporting evidence\n3) Evaluate the conclusion",
+  "input": "[Text to analyze]",
+  "output": "1) Main argument: [...].\n2) Evidence: [...].\n3) Evaluation: [...]"
+}
+```
+</Accordion>
+</AccordionGroup>
+
+## Efficient Training Through Parameter-Efficient Methods
+
+Parameter-Efficient Fine-Tuning (PEFT) strategies optimize the fine-tuning process by modifying only a subset of model parameters. This approach dramatically reduces computational requirements while maintaining performance.
+
+### Popular PEFT Approaches
+
+<CardGroup cols={2}>
+<Card title="LoRA" icon="layer-group">
+  **Low-Rank Adaptation**
+  - Adds trainable rank decomposition matrices
+  - Typically modifies <1% of parameters
+  - Maintains original model weights
+</Card>
+
+<Card title="Prefix Tuning" icon="text-left">
+  **Learnable Prefix Tokens**
+  - Prepends trainable tokens to inputs
+  - No modification of base model
+  - Flexible and reversible
+</Card>
+
+<Card title="Adapter Layers" icon="plug">
+  **Bottleneck Modules**
+  - Inserts small trainable layers
+  - Original model remains frozen
+  - Easy to swap for different tasks
+</Card>
+
+<Card title="IA³" icon="bolt">
+  **Infused Adapter by Inhibiting and Amplifying**
+  - Scales activations with learned vectors
+  - Extremely parameter efficient
+  - Fast training and inference
+</Card>
+</CardGroup>
+
+### PEFT Data Requirements
+
+PEFT methods maintain the fundamental prompt-response training paradigm:
+
+<Note>
+PEFT typically requires the same data format as full fine-tuning but can achieve good results with smaller datasets due to reduced parameter space.
+</Note>
+
+| Method | Typical Dataset Size | Training Time Reduction |
+|--------|---------------------|------------------------|
+| Full Fine-tuning | 10K-1M examples | Baseline |
+| LoRA | 1K-100K examples | 10-100x faster |
+| Prefix Tuning | 1K-50K examples | 20-200x faster |
+| Adapters | 1K-100K examples | 10-50x faster |
+
+## Open-Source Instruction Datasets
+
+High-quality instruction datasets now exist in open-source repositories:
+
+<Tabs>
+<Tab title="General Purpose">
+- **Alpaca**: 52K instruction-following examples
+- **Dolly**: 15K human-generated instructions
+- **OpenAssistant**: Multilingual conversation trees
+- **ShareGPT**: Real user-ChatGPT conversations
+</Tab>
+
+<Tab title="Specialized">
+- **Code Alpaca**: Programming-focused instructions
+- **Medical Meadow**: Healthcare domain instructions
+- **Finance Alpaca**: Financial analysis tasks
+- **Legal Alpaca**: Legal document processing
+</Tab>
+
+<Tab title="Multilingual">
+- **mT5 Instructions**: 100+ languages
+- **BLOOM Instructions**: Multilingual prompts
+- **XP3**: Cross-lingual instruction dataset
+</Tab>
+</Tabs>
+
+<Tip>
+While open-source datasets provide excellent starting points, custom datasets tailored to your specific domain often yield superior results for specialized applications.
+</Tip>
+
+## Best Practices for Fine-tuning Data
+
+<Steps>
+<Step title="Start with Data Auditing">
+Review existing datasets for quality, bias, and relevance before creating new data.
+</Step>
+
+<Step title="Implement Version Control">
+Track dataset versions, changes, and experimental results for reproducibility.
+</Step>
+
+<Step title="Create Held-out Test Sets">
+Reserve 10-20% of high-quality data for evaluation, ensuring no overlap with training.
+</Step>
+
+<Step title="Monitor for Data Drift">
+Regularly evaluate whether your training data still represents real-world usage patterns.
+</Step>
+</Steps> 
