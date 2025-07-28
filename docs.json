@@ -38,7 +38,7 @@
       "anchors": [
         {
           "anchor": "Documentation",
-          "href": "/",
+          "href": "/index",
           "icon": "book-open-cover"
         },
         {
