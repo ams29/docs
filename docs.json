@@ -32,11 +32,14 @@
             "group": "Types of data",
             "pages": [
               "essentials/pretraining",
-              "essentials/fine-tuning",
+              "essentials/post-training",
               "essentials/alignment",
               "essentials/evaluation",
-              "essentials/conversational",
-              "essentials/multimodal"
+              "essentials/dialogue",
+              "essentials/agent",
+              "essentials/image",
+              "essentials/video",
+              "essentials/audio"
             ]
           },
           {

@@ -1,0 +1,573 @@
+---
+title: 'Agent Data'
+description: 'Training data for autonomous agents and multi-step reasoning systems'
+icon: 'robot'
+---
+
+## Supporting Autonomous Agent Development
+
+Agent-based systems require specialized data to enable autonomous task execution. Unlike traditional conversational AI, agents must plan, execute, and adapt to achieve complex goals across extended workflows.
+
+<Note>
+Agent training data focuses on decision-making, tool usage, and multi-step reasoning rather than just conversation.
+</Note>
+
+## Key Data Categories for Agents
+
+<CardGroup cols={2}>
+<Card title="Planning Capabilities" icon="route">
+  Teaching workflow decomposition, adaptive replanning, task delegation, and self-evaluation
+</Card>
+
+<Card title="Task Execution" icon="play">
+  Improving specific skills like tool usage, code generation, and information synthesis
+</Card>
+
+<Card title="Extended Interactions" icon="clock">
+  Training on lengthy exchanges to maintain context and coherence over time
+</Card>
+
+<Card title="User Preferences" icon="user-check">
+  Collecting feedback on intermediate steps and final outputs
+</Card>
+</CardGroup>
+
+## Agent Training Data Types
+
+### Task Decomposition Examples
+
+<CodeGroup>
+```json Project Management
+{
+  "task": "Create a monthly financial report",
+  "plan": [
+    {
+      "step": 1,
+      "action": "Gather financial data from all departments",
+      "tools": ["database_query", "spreadsheet_reader"],
+      "dependencies": [],
+      "estimated_time": "30 minutes"
+    },
+    {
+      "step": 2,
+      "action": "Calculate key metrics (revenue, expenses, profit)",
+      "tools": ["calculator", "data_analyzer"],
+      "dependencies": [1],
+      "estimated_time": "45 minutes"
+    },
+    {
+      "step": 3,
+      "action": "Create visualizations for trends",
+      "tools": ["chart_generator"],
+      "dependencies": [2],
+      "estimated_time": "30 minutes"
+    },
+    {
+      "step": 4,
+      "action": "Write executive summary",
+      "tools": ["text_generator"],
+      "dependencies": [2, 3],
+      "estimated_time": "20 minutes"
+    }
+  ],
+  "evaluation_criteria": {
+    "completeness": "All sections included",
+    "accuracy": "Calculations verified",
+    "clarity": "Easy to understand"
+  }
+}
+```
+
+```json Research Task
+{
+  "task": "Analyze competitor landscape for SaaS product",
+  "plan": [
+    {
+      "step": 1,
+      "action": "Identify top 10 competitors",
+      "tools": ["web_search", "industry_reports"],
+      "dependencies": []
+    },
+    {
+      "step": 2,
+      "action": "Gather pricing and feature data",
+      "tools": ["web_scraper", "api_calls"],
+      "dependencies": [1]
+    },
+    {
+      "step": 3,
+      "action": "Analyze market positioning",
+      "tools": ["data_analyzer", "visualization"],
+      "dependencies": [2]
+    },
+    {
+      "step": 4,
+      "action": "Generate strategic recommendations",
+      "tools": ["report_generator"],
+      "dependencies": [3]
+    }
+  ]
+}
+```
+</CodeGroup>
+
+### Tool Usage Training
+
+<Tabs>
+<Tab title="API Integration">
+```json
+{
+  "scenario": "Research competitor pricing",
+  "actions": [
+    {
+      "thought": "I need to find current pricing for top 5 competitors",
+      "action": "web_search",
+      "action_input": "SaaS project management tool pricing 2024",
+      "observation": "Found pricing pages for Asana, Monday, Trello..."
+    },
+    {
+      "thought": "I should extract specific pricing tiers",
+      "action": "web_scrape",
+      "action_input": "https://asana.com/pricing",
+      "observation": "Basic: $10.99/user, Premium: $24.99/user..."
+    },
+    {
+      "thought": "Now I'll compile this into a comparison table",
+      "action": "create_table",
+      "action_input": {
+        "headers": ["Tool", "Basic", "Premium", "Enterprise"],
+        "data": [
+          ["Asana", "$10.99", "$24.99", "Contact Sales"],
+          ["Monday", "$8.00", "$16.00", "$24.00"]
+        ]
+      }
+    }
+  ]
+}
+```
+</Tab>
+
+<Tab title="Code Generation">
+```json
+{
+  "scenario": "Create data processing pipeline",
+  "actions": [
+    {
+      "thought": "Need to process CSV files and generate reports",
+      "action": "code_generate",
+      "action_input": "Python script to read CSV, clean data, and create summary statistics",
+      "observation": "Generated pandas-based script with error handling"
+    },
+    {
+      "thought": "Should test the script with sample data",
+      "action": "code_execute",
+      "action_input": "test_script.py",
+      "observation": "Script runs successfully, produces expected output"
+    },
+    {
+      "thought": "Now I'll create documentation",
+      "action": "documentation_generate",
+      "action_input": "Document the data pipeline script with usage examples"
+    }
+  ]
+}
+```
+</Tab>
+
+<Tab title="Database Operations">
+```json
+{
+  "scenario": "Customer data analysis",
+  "actions": [
+    {
+      "thought": "Need to query customer database for churn analysis",
+      "action": "sql_query",
+      "action_input": "SELECT customer_id, signup_date, last_login FROM customers WHERE last_login < '2024-01-01'",
+      "observation": "Retrieved 1,247 potentially churned customers"
+    },
+    {
+      "thought": "Should analyze patterns in the data",
+      "action": "data_analysis",
+      "action_input": "Analyze churn patterns by signup cohort and usage metrics",
+      "observation": "Found 40% higher churn in Q3 2023 cohort"
+    }
+  ]
+}
+```
+</Tab>
+</Tabs>
+
+### Error Recovery and Adaptation
+
+<AccordionGroup>
+<Accordion title="API Failure Handling">
+```json
+{
+  "scenario": "API call failure during data retrieval",
+  "initial_action": {
+    "type": "api_call",
+    "endpoint": "/api/v1/users",
+    "result": "error_timeout"
+  },
+  "recovery_steps": [
+    {
+      "analysis": "API timeout detected, might be temporary",
+      "action": "retry_with_backoff",
+      "parameters": {
+        "max_retries": 3,
+        "backoff_factor": 2
+      }
+    },
+    {
+      "analysis": "Still failing after retries",
+      "action": "try_alternative_endpoint",
+      "fallback": "/api/v2/users"
+    },
+    {
+      "analysis": "No API access available",
+      "action": "use_cached_data",
+      "notification": "Using data from 2 hours ago",
+      "impact_assessment": "Minimal - data freshness acceptable for task"
+    }
+  ]
+}
+```
+</Accordion>
+
+<Accordion title="Plan Adaptation">
+```json
+{
+  "scenario": "Meeting scheduling conflict",
+  "original_plan": [
+    {"step": 1, "action": "Schedule team meeting for 2 PM"},
+    {"step": 2, "action": "Prepare presentation"},
+    {"step": 3, "action": "Send meeting agenda"}
+  ],
+  "conflict_detected": {
+    "issue": "Key participant unavailable at 2 PM",
+    "constraint": "Must complete before end of week"
+  },
+  "revised_plan": [
+    {"step": 1, "action": "Find alternative time slot"},
+    {"step": 2, "action": "Poll team availability"},
+    {"step": 3, "action": "Reschedule for 10 AM Friday"},
+    {"step": 4, "action": "Adjust presentation timing"},
+    {"step": 5, "action": "Send updated agenda"}
+  ]
+}
+```
+</Accordion>
+
+<Accordion title="Resource Constraint Handling">
+```json
+{
+  "scenario": "Insufficient computational resources",
+  "constraint": {
+    "type": "memory_limit",
+    "available": "8GB",
+    "required": "16GB"
+  },
+  "adaptations": [
+    {
+      "strategy": "data_chunking",
+      "description": "Process data in smaller batches",
+      "trade_off": "Increased processing time"
+    },
+    {
+      "strategy": "algorithm_substitution",
+      "description": "Use memory-efficient algorithm variant",
+      "trade_off": "Slightly reduced accuracy"
+    },
+    {
+      "strategy": "cloud_scaling",
+      "description": "Request additional compute resources",
+      "cost_impact": "$50 estimated"
+    }
+  ]
+}
+```
+</Accordion>
+</AccordionGroup>
+
+## Multi-Step Workflow Training
+
+### Extended Task Examples
+
+<Steps>
+<Step title="Content Creation Workflow">
+Complex multi-hour tasks requiring sustained attention:
+
+```json
+{
+  "task": "Create comprehensive marketing campaign",
+  "duration": "4-6 hours",
+  "steps": [
+    "Market research and competitor analysis",
+    "Target audience definition",
+    "Message and positioning development", 
+    "Creative asset creation",
+    "Campaign timeline planning",
+    "Budget allocation",
+    "Success metrics definition"
+  ],
+  "context_retention": "Must maintain brand voice throughout"
+}
+```
+</Step>
+
+<Step title="Software Development Project">
+Multi-day development cycles:
+
+```json
+{
+  "task": "Implement new API endpoint",
+  "duration": "2-3 days",
+  "phases": [
+    "Requirements analysis",
+    "API design and documentation",
+    "Implementation",
+    "Testing and debugging",
+    "Code review feedback integration",
+    "Deployment preparation"
+  ],
+  "dependencies": "Database schema changes, authentication updates"
+}
+```
+</Step>
+
+<Step title="Data Analysis Project">
+Research and analysis workflows:
+
+```json
+{
+  "task": "Customer behavior analysis",
+  "duration": "1-2 weeks",
+  "methodology": [
+    "Data collection and validation",
+    "Exploratory data analysis",
+    "Hypothesis formation",
+    "Statistical testing",
+    "Insight generation",
+    "Recommendation development",
+    "Presentation creation"
+  ],
+  "deliverables": "Executive summary, detailed report, actionable recommendations"
+}
+```
+</Step>
+</Steps>
+
+## Post-Deployment Data Collection
+
+Agent systems generate valuable training data during real-world deployment:
+
+<Tabs>
+<Tab title="Success Patterns">
+Collecting examples of effective agent behavior:
+
+```json
+{
+  "task_id": "task_12345",
+  "outcome": "successful",
+  "metrics": {
+    "completion_time": "23 minutes",
+    "user_satisfaction": 4.8,
+    "efficiency_score": 0.92
+  },
+  "learning_signals": [
+    "Effective tool selection",
+    "Optimal step ordering",
+    "Good error recovery",
+    "Clear communication"
+  ]
+}
+```
+</Tab>
+
+<Tab title="Failure Analysis">
+Learning from unsuccessful attempts:
+
+```json
+{
+  "task_id": "task_67890",
+  "outcome": "failed",
+  "failure_point": "Step 3: Data analysis",
+  "root_cause": "Insufficient context retention",
+  "improvement_areas": [
+    "Better working memory management",
+    "More frequent context validation",
+    "Enhanced error detection"
+  ],
+  "recovery_suggestions": [
+    "Implement checkpoint system",
+    "Add context summarization",
+    "Improve error messaging"
+  ]
+}
+```
+</Tab>
+
+<Tab title="User Feedback">
+Direct feedback on agent performance:
+
+```json
+{
+  "feedback_type": "intermediate_step",
+  "step": "Data visualization creation",
+  "user_rating": 3,
+  "comments": "Chart is accurate but hard to read",
+  "suggestions": [
+    "Use different colors for better contrast",
+    "Add data labels for clarity",
+    "Increase font size"
+  ],
+  "agent_response": "Acknowledged, updating visualization parameters"
+}
+```
+</Tab>
+</Tabs>
+
+## Agent Performance Metrics
+
+<CardGroup cols={2}>
+<Card title="Task Success Rate" icon="check-circle">
+  **Target: >75%**
+  - Completed objectives
+  - Met user requirements
+  - Achieved within time constraints
+</Card>
+
+<Card title="Efficiency Score" icon="gauge">
+  **Target: <1.5x optimal**
+  - Steps vs optimal path
+  - Resource utilization
+  - Time to completion
+</Card>
+
+<Card title="Error Recovery" icon="shield">
+  **Target: >90%**
+  - Successful failure handling
+  - Graceful degradation
+  - User communication
+</Card>
+
+<Card title="User Satisfaction" icon="heart">
+  **Target: >80%**
+  - Positive feedback
+  - Task completion satisfaction
+  - Would use again
+</Card>
+</CardGroup>
+
+## Critical Considerations for Agent Systems
+
+<Warning>
+Given the compound nature of multi-step workflows, thorough evaluation at each stage becomes critical for system reliability.
+</Warning>
+
+### Evaluation Strategy
+
+<Steps>
+<Step title="Component Testing">
+Test individual capabilities in isolation:
+- Tool usage accuracy
+- Planning logic quality
+- Error handling robustness
+- Context retention ability
+</Step>
+
+<Step title="Integration Testing">
+Verify component interactions:
+- Tool chaining effectiveness
+- State management consistency
+- Resource handling efficiency
+- Failure propagation control
+</Step>
+
+<Step title="End-to-End Validation">
+Test complete workflows:
+- Task completion rates
+- Time efficiency
+- Resource usage optimization
+- Output quality assessment
+</Step>
+
+<Step title="Human-in-the-Loop Testing">
+Validate with real users:
+- Usability studies
+- Preference collection
+- Failure analysis
+- Improvement suggestions
+</Step>
+</Steps>
+
+## Best Practices for Agent Data
+
+<AccordionGroup>
+<Accordion title="Workflow Diversity">
+Ensure comprehensive scenario coverage:
+- Different task complexities
+- Various domain applications
+- Multiple user types
+- Edge cases and exceptions
+- Success and failure examples
+</Accordion>
+
+<Accordion title="Context Management">
+Train for long-term consistency:
+- Working memory updates
+- Goal tracking across sessions
+- State persistence
+- Context summarization
+- Priority management
+</Accordion>
+
+<Accordion title="Tool Integration">
+Comprehensive tool usage patterns:
+- Single tool mastery
+- Multi-tool workflows
+- Tool selection strategies
+- Error handling per tool
+- Performance optimization
+</Accordion>
+
+<Accordion title="Human Collaboration">
+Human-agent interaction patterns:
+- Clarification requests
+- Progress updates
+- Approval workflows
+- Feedback integration
+- Handoff procedures
+</Accordion>
+</AccordionGroup>
+
+## Continuous Learning Architecture
+
+<Info>
+Agent systems benefit from continuous learning loops that incorporate real-world performance data back into training.
+</Info>
+
+### Feedback Integration Pipeline
+
+<Tabs>
+<Tab title="Real-Time Learning">
+- Online adaptation to user preferences
+- Performance metric tracking
+- Error pattern detection
+- Success pattern reinforcement
+</Tab>
+
+<Tab title="Batch Updates">
+- Periodic model fine-tuning
+- Dataset expansion with new examples
+- Capability gap identification
+- Performance regression testing
+</Tab>
+
+<Tab title="Human Oversight">
+- Expert review of edge cases
+- Quality control processes
+- Safety validation
+- Ethical compliance checks
+</Tab>
+</Tabs> 

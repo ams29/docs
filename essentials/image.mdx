@@ -1,0 +1,591 @@
+---
+title: 'Image Data'
+description: 'Processing and annotating visual data for computer vision models'
+icon: 'image'
+---
+
+## Visual Data Processing
+
+Image data forms the foundation of computer vision tasks, from simple classification to complex generation and understanding. Working with images requires specialized preprocessing, annotation interfaces, and quality control processes.
+
+<Note>
+Image data processing involves unique challenges in standardization, annotation accuracy, and scale management that differ significantly from text-based data.
+</Note>
+
+## Image Preprocessing Pipeline
+
+Before annotation or training, images typically undergo several preprocessing steps:
+
+<Steps>
+<Step title="Format Standardization">
+- Handle various image formats (JPEG, PNG, WebP, TIFF)
+- Standardize image dimensions (e.g., 224x224, 512x512, 1024x1024)
+- Normalize pixel values to [0,1] or [-1,1] range
+- Maintain aspect ratios when necessary
+- Convert color spaces (RGB, CMYK, Grayscale)
+</Step>
+
+<Step title="Quality Control">
+Filter out problematic images:
+- Corrupted or unreadable files
+- Extreme aspect ratios (>10:1 or <1:10)
+- Very low resolution (<64x64 pixels)
+- Duplicate detection using perceptual hashing
+- NSFW content filtering
+- Copyright violation screening
+</Step>
+
+<Step title="Data Augmentation">
+Apply transformations to increase dataset diversity:
+- Rotation (±15-30 degrees)
+- Cropping (random, center, or corner crops)
+- Flipping (horizontal/vertical)
+- Color adjustments (brightness, contrast, saturation, hue)
+- Advanced augmentations (cutout, mixup, autoaugment, RandAugment)
+- Geometric transformations (shear, perspective)
+</Step>
+</Steps>
+
+## Image Annotation Tasks
+
+<Tabs>
+<Tab title="Classification">
+Categorical labeling of entire images:
+
+<CodeGroup>
+```json Single Label
+{
+  "image_id": "img_12345",
+  "filename": "cat_on_sofa.jpg",
+  "label": "cat",
+  "confidence": 0.95,
+  "annotator_id": "ann_789",
+  "metadata": {
+    "image_width": 1920,
+    "image_height": 1080,
+    "annotation_time": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+```json Multi-Label
+{
+  "image_id": "img_67890",
+  "filename": "outdoor_scene.jpg",
+  "labels": [
+    {"label": "outdoor", "confidence": 0.98},
+    {"label": "trees", "confidence": 0.92},
+    {"label": "people", "confidence": 0.87},
+    {"label": "daylight", "confidence": 0.94}
+  ],
+  "primary_label": "outdoor",
+  "annotator_id": "ann_456"
+}
+```
+
+```json Hierarchical
+{
+  "image_id": "img_11111",
+  "filename": "vehicle_street.jpg",
+  "hierarchical_labels": {
+    "transportation": {
+      "land_vehicle": {
+        "motor_vehicle": {
+          "car": {
+            "sedan": 0.89
+          }
+        }
+      }
+    }
+  }
+}
+```
+</CodeGroup>
+
+**Applications:**
+- Content moderation and safety
+- Product categorization for e-commerce
+- Medical diagnosis and screening
+- Scene understanding and context
+- Quality control in manufacturing
+</Tab>
+
+<Tab title="Object Detection">
+Locating and labeling specific elements with bounding boxes:
+
+<CodeGroup>
+```json COCO Format
+{
+  "image_id": "img_22222",
+  "annotations": [
+    {
+      "id": 1,
+      "category_id": 1,
+      "category_name": "person",
+      "bbox": [125, 80, 245, 320],  // [x, y, width, height]
+      "area": 78400,
+      "iscrowd": 0,
+      "confidence": 0.98
+    },
+    {
+      "id": 2,
+      "category_id": 2,
+      "category_name": "bicycle",
+      "bbox": [200, 150, 180, 200],
+      "area": 36000,
+      "iscrowd": 0,
+      "confidence": 0.92
+    }
+  ],
+  "image_metadata": {
+    "width": 640,
+    "height": 480,
+    "channels": 3
+  }
+}
+```
+
+```json YOLO Format
+{
+  "image_path": "images/street_scene.jpg",
+  "annotations": [
+    {
+      "class": 0,  // person
+      "x_center": 0.390625,  // normalized
+      "y_center": 0.5,
+      "width": 0.3828125,
+      "height": 0.6666667
+    },
+    {
+      "class": 1,  // bicycle
+      "x_center": 0.453125,
+      "y_center": 0.5208333,
+      "width": 0.28125,
+      "height": 0.4166667
+    }
+  ]
+}
+```
+</CodeGroup>
+
+**Key Considerations:**
+- Consistent bounding box quality
+- Edge case handling (partial objects, occlusion)
+- Class imbalance management
+- Annotation speed vs accuracy trade-offs
+</Tab>
+
+<Tab title="Segmentation">
+Pixel-level classification for precise object boundaries:
+
+<CodeGroup>
+```json Instance Segmentation
+{
+  "image_id": "img_33333",
+  "segmentations": [
+    {
+      "id": 1,
+      "category_id": 3,
+      "category_name": "car",
+      "polygon": [[125, 80], [130, 85], [135, 85], [140, 90], ...],
+      "area": 15420,
+      "bbox": [125, 80, 200, 150],
+      "iscrowd": 0
+    },
+    {
+      "id": 2,
+      "category_id": 3,
+      "category_name": "car",
+      "polygon": [[300, 120], [305, 125], [310, 125], ...],
+      "area": 12800,
+      "bbox": [300, 120, 180, 130],
+      "iscrowd": 0
+    }
+  ]
+}
+```
+
+```json Semantic Segmentation
+{
+  "image_id": "img_44444",
+  "semantic_mask": "path/to/mask_44444.png",
+  "class_mapping": {
+    0: "background",
+    1: "road",
+    2: "sidewalk",
+    3: "building",
+    4: "vegetation",
+    5: "vehicle",
+    6: "person"
+  },
+  "pixel_counts": {
+    "road": 45230,
+    "building": 32100,
+    "vegetation": 28900,
+    "vehicle": 5600,
+    "person": 2100
+  }
+}
+```
+</CodeGroup>
+
+**Segmentation Types:**
+- **Semantic**: Every pixel gets a class label
+- **Instance**: Individual object masks with instance IDs
+- **Panoptic**: Combined semantic + instance segmentation
+</Tab>
+
+<Tab title="Captioning">
+Generating descriptive text for images:
+
+<CodeGroup>
+```json Single Caption
+{
+  "image_id": "img_55555",
+  "caption": "A golden retriever playing fetch with a tennis ball in a sunny park",
+  "annotator_id": "ann_123",
+  "quality_score": 4.5,
+  "metadata": {
+    "word_count": 13,
+    "complexity": "simple",
+    "style": "descriptive"
+  }
+}
+```
+
+```json Multiple Captions
+{
+  "image_id": "img_66666",
+  "captions": [
+    {
+      "text": "A chef preparing pasta in a professional kitchen",
+      "annotator_id": "ann_456",
+      "quality_score": 4.7,
+      "style": "concise"
+    },
+    {
+      "text": "In a bustling restaurant kitchen, a skilled chef carefully prepares fresh pasta while steam rises from multiple pots on the industrial stove",
+      "annotator_id": "ann_789",
+      "quality_score": 4.3,
+      "style": "detailed"
+    },
+    {
+      "text": "Pasta preparation in commercial kitchen setting",
+      "annotator_id": "ann_321",
+      "quality_score": 3.8,
+      "style": "minimal"
+    }
+  ],
+  "consensus_caption": "A chef preparing pasta in a professional kitchen"
+}
+```
+</CodeGroup>
+
+**Caption Quality Criteria:**
+- Accuracy: Correctly describes image content
+- Completeness: Captures important visual elements
+- Clarity: Easy to understand language
+- Specificity: Appropriate level of detail
+- Objectivity: Avoids subjective interpretations
+</Tab>
+</Tabs>
+
+## Specialized Image Applications
+
+### Medical Imaging
+
+<AccordionGroup>
+<Accordion title="Diagnostic Imaging">
+```json
+{
+  "image_type": "chest_xray",
+  "patient_id": "patient_12345",
+  "annotations": [
+    {
+      "finding": "pneumonia",
+      "location": "right_lower_lobe",
+      "severity": "moderate",
+      "confidence": 0.87,
+      "radiologist_id": "rad_456"
+    }
+  ],
+  "metadata": {
+    "imaging_modality": "digital_radiography",
+    "acquisition_date": "2024-01-15",
+    "patient_age": 45,
+    "patient_gender": "female"
+  }
+}
+```
+
+**Considerations:**
+- HIPAA compliance and privacy protection
+- Expert annotation requirements
+- Quality control by medical professionals
+- Regulatory approval for training datasets
+</Accordion>
+
+<Accordion title="Pathology Images">
+```json
+{
+  "slide_id": "slide_78901",
+  "image_patches": [
+    {
+      "patch_id": "patch_001",
+      "coordinates": [1024, 2048, 512, 512],
+      "diagnosis": "malignant",
+      "cell_types": ["epithelial", "stromal"],
+      "pathologist_id": "path_123"
+    }
+  ],
+  "staining": "H&E",
+  "magnification": "40x"
+}
+```
+</Accordion>
+</AccordionGroup>
+
+### Autonomous Vehicles
+
+<Tabs>
+<Tab title="Street Scene Annotation">
+```json
+{
+  "image_id": "street_001",
+  "weather": "sunny",
+  "time_of_day": "afternoon",
+  "location": "urban_intersection",
+  "objects": [
+    {
+      "class": "traffic_light",
+      "state": "red",
+      "bbox": [340, 50, 80, 120],
+      "relevance": "high"
+    },
+    {
+      "class": "pedestrian",
+      "action": "crossing",
+      "bbox": [200, 180, 60, 140],
+      "relevance": "critical"
+    }
+  ]
+}
+```
+</Tab>
+
+<Tab title="3D Object Detection">
+```json
+{
+  "image_id": "lidar_rgb_001",
+  "3d_annotations": [
+    {
+      "class": "vehicle",
+      "3d_bbox": {
+        "center": [10.5, 2.3, 0.8],
+        "dimensions": [4.2, 1.8, 1.5],
+        "rotation": 0.15
+      },
+      "distance": 25.7,
+      "occlusion_level": "partially_occluded"
+    }
+  ]
+}
+```
+</Tab>
+</Tabs>
+
+## Image Generation Training Data
+
+For generative models, focus on high-quality prompt-image pairs:
+
+<CardGroup cols={2}>
+<Card title="Text-to-Image Pairs" icon="image">
+```json
+{
+  "prompt": "A serene Japanese garden with cherry blossoms in full bloom, traditional wooden bridge over a koi pond, soft morning light",
+  "image_path": "outputs/garden_001.png",
+  "style_tags": ["photorealistic", "landscape", "spring", "peaceful"],
+  "quality_rating": 4.7,
+  "generation_params": {
+    "model": "stable_diffusion_v2",
+    "steps": 50,
+    "cfg_scale": 7.5,
+    "seed": 42,
+    "resolution": "1024x1024"
+  }
+}
+```
+</Card>
+
+<Card title="Image Editing Pairs" icon="paintbrush">
+```json
+{
+  "source_image": "original/beach_scene.jpg",
+  "edit_instruction": "Replace the sunny sky with a dramatic sunset with purple and orange clouds",
+  "target_image": "edited/beach_sunset.jpg",
+  "edit_mask": "masks/sky_region.png",
+  "difficulty": "medium",
+  "edit_type": "sky_replacement"
+}
+```
+</Card>
+</CardGroup>
+
+## Quality Assurance for Image Data
+
+<Steps>
+<Step title="Technical Validation">
+- File integrity and format compliance
+- Resolution and aspect ratio requirements
+- Color space and bit depth verification
+- Metadata completeness checking
+- Duplicate detection and removal
+</Step>
+
+<Step title="Annotation Quality Control">
+- Inter-annotator agreement measurement
+- Expert validation for specialized domains
+- Consistency across similar images
+- Edge case coverage assessment
+- Bias detection and mitigation
+</Step>
+
+<Step title="Dataset Balance">
+- Class distribution analysis
+- Demographic representation
+- Geographic and cultural diversity
+- Temporal coverage (different seasons, times)
+- Quality distribution assessment
+</Step>
+</Steps>
+
+## Annotation Tools and Infrastructure
+
+### Popular Annotation Platforms
+
+<Tabs>
+<Tab title="Open Source">
+- **CVAT (Computer Vision Annotation Tool)**: Comprehensive annotation suite
+- **LabelImg**: Simple bounding box annotation
+- **Polygon-RNN++**: AI-assisted polygon annotation
+- **Supervisely**: Full-featured annotation platform
+</Tab>
+
+<Tab title="Commercial">
+- **Scale AI**: Professional annotation services
+- **Labelbox**: Enterprise annotation platform
+- **Hive Data**: Crowd-sourced annotation
+- **Amazon SageMaker Ground Truth**: AWS-integrated solution
+</Tab>
+
+<Tab title="Specialized Tools">
+- **3D Point Cloud**: CloudCompare, PCL
+- **Medical Imaging**: ITK-SNAP, 3D Slicer
+- **Satellite Imagery**: QGIS, ArcGIS
+- **Video Annotation**: VGG Image Annotator, DarkLabel
+</Tab>
+</Tabs>
+
+## Performance Metrics and Evaluation
+
+<CardGroup cols={2}>
+<Card title="Annotation Quality" icon="star">
+**Inter-Annotator Agreement**
+- Cohen's Kappa: >0.8
+- IoU for bounding boxes: >0.7
+- Pixel accuracy for segmentation: >95%
+</Card>
+
+<Card title="Dataset Coverage" icon="chart-bar">
+**Diversity Metrics**
+- Class balance (Gini coefficient)
+- Geographic distribution
+- Demographic representation
+- Edge case coverage
+</Card>
+
+<Card title="Technical Quality" icon="cog">
+**Image Standards**
+- Resolution consistency: ±10%
+- Color accuracy: Delta-E <3
+- Compression artifacts: <5%
+- Metadata completeness: >99%
+</Card>
+
+<Card title="Production Readiness" icon="rocket">
+**Deployment Metrics**
+- Model performance on test set
+- Real-world accuracy validation
+- Inference speed requirements
+- Memory usage optimization
+</Card>
+</CardGroup>
+
+## Best Practices for Image Data
+
+<Warning>
+Image datasets require careful attention to privacy, consent, and bias considerations, especially when dealing with people or sensitive locations.
+</Warning>
+
+<AccordionGroup>
+<Accordion title="Data Collection Ethics">
+- Obtain proper consent for images containing people
+- Respect privacy and cultural sensitivities
+- Avoid biased sampling that excludes demographics
+- Consider geographic and cultural representation
+- Implement data retention and deletion policies
+</Accordion>
+
+<Accordion title="Annotation Guidelines">
+- Develop comprehensive annotation manuals
+- Provide clear examples and edge cases
+- Implement quality control checkpoints
+- Regular calibration sessions for annotators
+- Version control for annotation standards
+</Accordion>
+
+<Accordion title="Infrastructure Requirements">
+- Scalable storage solutions (cloud or distributed)
+- High-bandwidth data transfer capabilities
+- GPU acceleration for preprocessing
+- Backup and disaster recovery plans
+- Access control and security measures
+</Accordion>
+
+<Accordion title="Continuous Improvement">
+- Regular dataset audits and quality assessments
+- Performance monitoring on downstream tasks
+- Feedback integration from model deployment
+- Iterative annotation guideline improvements
+- Technology stack updates and optimization
+</Accordion>
+</AccordionGroup>
+
+## Scale and Resource Planning
+
+### Dataset Size Considerations
+
+| Application Domain | Typical Dataset Size | Annotation Hours | Storage Requirements |
+|-------------------|---------------------|------------------|---------------------|
+| Image Classification | 10K-1M images | 0.1-1 hour/image | 100GB-10TB |
+| Object Detection | 5K-500K images | 1-5 hours/image | 50GB-5TB |
+| Segmentation | 1K-100K images | 5-20 hours/image | 10GB-1TB |
+| Medical Imaging | 100-10K images | 10-60 hours/image | 1GB-100GB |
+
+### Cost Optimization Strategies
+
+<Steps>
+<Step title="Efficient Annotation">
+- Use pre-trained models for initial annotations
+- Implement active learning to prioritize valuable examples
+- Employ hierarchical annotation (coarse-to-fine)
+- Leverage data augmentation to reduce collection needs
+</Step>
+
+<Step title="Quality vs Quantity Balance">
+- Focus on high-quality annotations for critical use cases
+- Use automated quality checks to reduce manual review
+- Implement consensus mechanisms for difficult cases
+- Balance expert vs crowd-sourced annotation based on complexity
+</Step>
+</Steps> 
