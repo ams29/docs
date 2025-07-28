@@ -44,7 +44,18 @@ description: "Welcome to the new home for your documentation"
 
 ## Our Process
 
-![Process Flow](/images/process-flow.svg)
+```mermaid
+graph LR
+    A[1. Source<br/>Find qualified<br/>domain experts] --> B[2. Screen<br/>Rigorous interviews<br/>& task tests]
+    B --> C[3. Manage<br/>Onboarding, training<br/>& support]
+    C --> D[4. Annotate<br/>Custom tasking<br/>interfaces]
+    D --> E[5. Review<br/>Multiple levels<br/>of human review]
+    E --> F[6. Audit<br/>Quality assurance<br/>auditing]
+    F --> G[7. Deliver<br/>Final dataset<br/>delivered]
+    
+    classDef stepStyle fill:#FF6B00,stroke:#CC5500,stroke-width:2px,color:#fff,font-weight:bold
+    class A,B,C,D,E,F,G stepStyle
+```
 
 <aside>
 **1. Source**
