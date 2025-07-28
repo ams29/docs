@@ -28,8 +28,8 @@ Before annotation or training, images typically undergo several preprocessing st
 <Step title="Quality Control">
 Filter out problematic images:
 - Corrupted or unreadable files
-- Extreme aspect ratios (>10:1 or <1:10)
-- Very low resolution (<64x64 pixels)
+- Extreme aspect ratios (>10:1 or `<1:10`)
+- Very low resolution (`<64x64` pixels)
 - Duplicate detection using perceptual hashing
 - NSFW content filtering
 - Copyright violation screening
@@ -507,8 +507,8 @@ For generative models, focus on high-quality prompt-image pairs:
 <Card title="Technical Quality" icon="cog">
 **Image Standards**
 - Resolution consistency: ±10%
-- Color accuracy: Delta-E <3
-- Compression artifacts: <5%
+- Color accuracy: Delta-E `<3`
+- Compression artifacts: `<5%`
 - Metadata completeness: >99%
 </Card>
 
