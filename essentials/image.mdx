@@ -459,33 +459,6 @@ For generative models, focus on high-quality prompt-image pairs:
 </Step>
 </Steps>
 
-## Annotation Tools and Infrastructure
-
-### Popular Annotation Platforms
-
-<Tabs>
-<Tab title="Open Source">
-- **CVAT (Computer Vision Annotation Tool)**: Comprehensive annotation suite
-- **LabelImg**: Simple bounding box annotation
-- **Polygon-RNN++**: AI-assisted polygon annotation
-- **Supervisely**: Full-featured annotation platform
-</Tab>
-
-<Tab title="Commercial">
-- **Scale AI**: Professional annotation services
-- **Labelbox**: Enterprise annotation platform
-- **Hive Data**: Crowd-sourced annotation
-- **Amazon SageMaker Ground Truth**: AWS-integrated solution
-</Tab>
-
-<Tab title="Specialized Tools">
-- **3D Point Cloud**: CloudCompare, PCL
-- **Medical Imaging**: ITK-SNAP, 3D Slicer
-- **Satellite Imagery**: QGIS, ArcGIS
-- **Video Annotation**: VGG Image Annotator, DarkLabel
-</Tab>
-</Tabs>
-
 ## Performance Metrics and Evaluation
 
 <CardGroup cols={2}>
@@ -520,45 +493,5 @@ For generative models, focus on high-quality prompt-image pairs:
 - Memory usage optimization
 </Card>
 </CardGroup>
-
-## Best Practices for Image Data
-
-<Warning>
-Image datasets require careful attention to privacy, consent, and bias considerations, especially when dealing with people or sensitive locations.
-</Warning>
-
-<AccordionGroup>
-<Accordion title="Data Collection Ethics">
-- Obtain proper consent for images containing people
-- Respect privacy and cultural sensitivities
-- Avoid biased sampling that excludes demographics
-- Consider geographic and cultural representation
-- Implement data retention and deletion policies
-</Accordion>
-
-<Accordion title="Annotation Guidelines">
-- Develop comprehensive annotation manuals
-- Provide clear examples and edge cases
-- Implement quality control checkpoints
-- Regular calibration sessions for annotators
-- Version control for annotation standards
-</Accordion>
-
-<Accordion title="Infrastructure Requirements">
-- Scalable storage solutions (cloud or distributed)
-- High-bandwidth data transfer capabilities
-- GPU acceleration for preprocessing
-- Backup and disaster recovery plans
-- Access control and security measures
-</Accordion>
-
-<Accordion title="Continuous Improvement">
-- Regular dataset audits and quality assessments
-- Performance monitoring on downstream tasks
-- Feedback integration from model deployment
-- Iterative annotation guideline improvements
-- Technology stack updates and optimization
-</Accordion>
-</AccordionGroup>
 
  
