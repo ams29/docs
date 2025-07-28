@@ -1,0 +1,11 @@
+<svg width="300" height="50" viewBox="0 0 300 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mango icon -->
+  <circle cx="25" cy="25" r="20" fill="#FF6B00"/>
+  <circle cx="22" cy="22" r="16" fill="#FF8533"/>
+  
+  <!-- MangoDesk text -->
+  <text x="55" y="22" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#FF6B00">MangoDesk</text>
+  
+  <!-- Human Data text -->
+  <text x="55" y="38" font-family="Arial, sans-serif" font-size="14" fill="#666666">Human Data</text>
+</svg>
