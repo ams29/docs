@@ -12,13 +12,6 @@
     }
   },
   "favicon": "/favicon.svg",
-  "appearance": {
-    "theme": "system",
-    "strict": false
-  },
-  "styling": {
-    "logoHeight": "40px"
-  },
   "navigation": {
     "tabs": [
       {
@@ -103,8 +96,8 @@
     }
   },
   "logo": {
-    "light": "/images/mangologo-with-text.svg",
-    "dark": "/images/mangologo-with-text.svg"
+    "light": "/images/mangologo-min.png",
+    "dark": "/images/mangologo-min.png"
   },
   "navbar": {
     "links": [
