@@ -221,51 +221,6 @@ Continuously improve the process:
 </Step>
 </Steps>
 
-## Advanced RLHF Techniques
-
-### Constitutional AI
-
-Incorporates explicit principles into the training process:
-
-<Accordion title="Implementation Approach">
-1. Define constitutional principles (e.g., "be helpful," "avoid harm")
-2. Generate self-critiques based on principles
-3. Revise responses according to critiques
-4. Train on the improved responses
-
-Example principles:
-- "Choose the response that is most helpful"
-- "Avoid generating harmful or biased content"
-- "Prefer factually accurate information"
-- "Respect user privacy and confidentiality"
-</Accordion>
-
-### Multi-Objective RLHF
-
-Balances multiple competing objectives:
-
-<Tabs>
-<Tab title="Weighted Rewards">
-Combine multiple reward signals with weights:
-```python
-total_reward = (
-    0.4 * helpfulness_reward +
-    0.3 * accuracy_reward +
-    0.2 * safety_reward +
-    0.1 * style_reward
-)
-```
-</Tab>
-
-<Tab title="Pareto Optimization">
-Find solutions that optimize multiple objectives without clear trade-offs between them.
-</Tab>
-
-<Tab title="Conditional Training">
-Train models to optimize different objectives based on context or user preferences.
-</Tab>
-</Tabs>
-
 ## Continuous Learning from Deployment
 
 <Tip>
@@ -290,12 +245,4 @@ Post-deployment user interactions provide valuable preference data for ongoing a
 </Card>
 </CardGroup>
 
-### Privacy and Consent
-
-<Note>
-Always ensure proper consent and privacy protection when collecting user preference data:
-- Clear data usage policies
-- Opt-in mechanisms
-- Anonymization procedures
-- Secure storage practices
-</Note> 
+ 

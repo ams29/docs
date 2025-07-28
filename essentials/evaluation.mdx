@@ -30,44 +30,6 @@ Each evaluation dataset contains three core components:
 </Card>
 </CardGroup>
 
-### Example Evaluation Formats
-
-<CodeGroup>
-```json Multiple Choice
-{
-  "question": "What is the capital of France?",
-  "choices": ["London", "Berlin", "Paris", "Madrid"],
-  "correct_answer": "C",
-  "category": "geography",
-  "difficulty": "easy"
-}
-```
-
-```json Open-Ended Generation
-{
-  "prompt": "Write a Python function to calculate factorial",
-  "test_cases": [
-    {"input": 5, "expected": 120},
-    {"input": 0, "expected": 1},
-    {"input": 10, "expected": 3628800}
-  ],
-  "evaluation_type": "code_execution"
-}
-```
-
-```json Comparative Evaluation
-{
-  "context": "Article about climate change...",
-  "task": "Summarize in 3 sentences",
-  "criteria": {
-    "accuracy": "Must mention key points",
-    "conciseness": "Under 75 words",
-    "coherence": "Logical flow between sentences"
-  }
-}
-```
-</CodeGroup>
-
 ## Key Evaluation Challenges
 
 ### Benchmark Limitations
