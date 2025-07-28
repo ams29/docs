@@ -37,11 +37,6 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "/index",
-          "icon": "book-open-cover"
-        },
-        {
           "anchor": "Support",
           "href": "mailto:founders@mangodesk.com",
           "icon": "slack"
