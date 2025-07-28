@@ -7,7 +7,7 @@
     "light": "#FF8533",
     "dark": "#CC5500"
   },
-  "favicon": "/images/mangologo-min.png",
+  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
