@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "MangoDesk Human Data",
   "colors": {
-    "primary": "#FF6B35",
-    "light": "#FF8C42",
-    "dark": "#E55A2B"
+    "primary": "#FF7A00",
+    "light": "#FF9500",
+    "dark": "#E66A00"
   },
   "favicon": "/favicon.svg",
   "navigation": {
