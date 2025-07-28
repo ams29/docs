@@ -1,13 +1,13 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "MangoDesk Human Data",
+  "name": "Human Data",
   "colors": {
     "primary": "#FF6B00",
     "light": "#FF8533",
     "dark": "#CC5500"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/images/mangologo-min.png",
   "navigation": {
     "tabs": [
       {
@@ -22,13 +22,6 @@
             ]
           },
           {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
             "group": "Types of data",
             "pages": [
               "essentials/alignment",
@@ -38,14 +31,6 @@
               "essentials/image",
               "essentials/video",
               "essentials/audio"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
             ]
           }
         ]

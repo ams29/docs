@@ -1,0 +1,24 @@
+<svg width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="gradient1" cx="0.3" cy="0.2" r="0.8">
+      <stop offset="0%" style="stop-color:#FF6B00;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#FF8533;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#FF8533;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="gradient2" cx="0.8" cy="0.8" r="0.6">
+      <stop offset="0%" style="stop-color:#FF8533;stop-opacity:0.25" />
+      <stop offset="50%" style="stop-color:#FF6B00;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#FF6B00;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="gradient3" cx="0.1" cy="0.9" r="0.5">
+      <stop offset="0%" style="stop-color:#CC5500;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#CC5500;stop-opacity:0" />
+    </radialGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="60" />
+    </filter>
+  </defs>
+  <rect width="1440" height="1024" fill="url(#gradient1)" filter="url(#blur)" />
+  <rect width="1440" height="1024" fill="url(#gradient2)" filter="url(#blur)" opacity="0.7" />
+  <rect width="1440" height="1024" fill="url(#gradient3)" filter="url(#blur)" opacity="0.5" />
+</svg> 
