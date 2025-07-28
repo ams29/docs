@@ -31,8 +31,6 @@
           {
             "group": "Types of data",
             "pages": [
-              "essentials/pretraining",
-              "essentials/post-training",
               "essentials/alignment",
               "essentials/evaluation",
               "essentials/conversational",
