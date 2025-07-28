@@ -1,4 +1,8 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 2C7 2 3 6 3 12C3 16 5 19 8 20C9 20.5 10 21 12 21C14 21 15 20.5 16 20C19 19 21 16 21 12C21 6 17 2 12 2Z" fill="#FF6B00"/>
-<path d="M12 2C11 2 10 2.2 9 2.5C9.5 3 10 4 10 5C10 6 9.5 7 9 7.5C8.5 8 8 8 7 8C6 8 5 7.5 4.5 7C4.2 8 4 9 4 10C4 15 7 19 12 19C17 19 20 15 20 10C20 6 16 2 12 2Z" fill="#FF8533"/>
+  <!-- Main mango shape -->
+  <ellipse cx="12" cy="13" rx="8" ry="9" fill="#FF6B00"/>
+  <!-- Highlight -->
+  <ellipse cx="10" cy="11" rx="6" ry="7" fill="#FF8533"/>
+  <!-- Mango stem -->
+  <path d="M12 4C12 4 11 3 10 4C9 5 10 6 12 5" fill="#4CAF50"/>
 </svg>
