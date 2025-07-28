@@ -35,7 +35,7 @@
               "essentials/post-training",
               "essentials/alignment",
               "essentials/evaluation",
-              "essentials/dialogue",
+              "essentials/conversational",
               "essentials/agent",
               "essentials/image",
               "essentials/video",
