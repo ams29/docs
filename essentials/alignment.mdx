@@ -163,48 +163,7 @@ Challenges:
 </Accordion>
 </AccordionGroup>
 
-### Direct Policy Optimization (DPO)
-
-DPO streamlines the process by incorporating preferences directly without a separate reward model:
-
-<Card title="DPO Advantages" icon="rocket">
-- Eliminates reward model training
-- More stable optimization
-- Reduced computational requirements
-- Direct preference learning
-</Card>
-
-<CodeGroup>
-```json DPO Training Data
-{
-  "prompt": "Explain the benefits of exercise",
-  "chosen": "Regular exercise improves cardiovascular health...",
-  "rejected": "Exercise is good for you because...",
-  "metadata": {
-    "chosen_score": 0.85,
-    "rejected_score": 0.42
-  }
-}
-```
-
-```python DPO Loss Function
-# Simplified DPO objective
-def dpo_loss(model, prompt, chosen, rejected, beta=0.1):
-    chosen_logprob = model.log_prob(prompt, chosen)
-    rejected_logprob = model.log_prob(prompt, rejected)
-    
-    reward_chosen = beta * chosen_logprob
-    reward_rejected = beta * rejected_logprob
-    
-    return -log_sigmoid(reward_chosen - reward_rejected)
-```
-</CodeGroup>
-
 ## Resource Requirements and Considerations
-
-<Warning>
-Due to its complexity and resource requirements, RLHF may not suit all applications, particularly specialized use cases with limited budgets.
-</Warning>
 
 ### When to Use RLHF
 
@@ -224,15 +183,7 @@ Due to its complexity and resource requirements, RLHF may not suit all applicati
 </Card>
 </CardGroup>
 
-### Resource Estimation
 
-| Component | Minimum Requirements | Recommended |
-|-----------|---------------------|--------------|
-| Preference Data | 10K comparisons | 50K+ comparisons |
-| Annotators | 5-10 trained raters | 20+ diverse raters |
-| Compute (GPUs) | 4x A100 | 8-16x A100 |
-| Training Time | 1-2 weeks | 4-8 weeks |
-| Budget | $50K-100K | $200K+ |
 
 ## Best Practices for Preference Data
 
